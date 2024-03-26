@@ -1,86 +1,79 @@
 class Admin:
     def __init__(self, adminID, firstName, lastName, email, phoneNumber, username, password, role, joinDate):
-        self._adminID = adminID
-        self._firstName = firstName
-        self._lastName = lastName
-        self._email = email
-        self._phoneNumber = phoneNumber
-        self._username = username
-        self._password = password
-        self._role = role
-        self._joinDate = joinDate
+        self.__adminID = adminID
+        self.__firstName = firstName
+        self.__lastName = lastName
+        self.__email = email
+        self.__phoneNumber = phoneNumber
+        self.__username = username
+        self.__password = password
+        self.__role = role
+        self.__joinDate = joinDate
 
-    @property
-    def adminID(self):
-        return self._adminID
+    def get_adminID(self):
+        return self.__adminID
 
-    @adminID.setter
-    def adminID(self, value):
-        self._adminID = value
+    def set_adminID(self, value):
+        self.__adminID = value
 
-    @property
-    def firstName(self):
-        return self._firstName
+    def get_firstName(self):
+        return self.__firstName
 
-    @firstName.setter
-    def firstName(self, value):
-        self._firstName = value
+    def set_firstName(self, value):
+        self.__firstName = value
 
-    @property
-    def lastName(self):
-        return self._lastName
+    def get_lastName(self):
+        return self.__lastName
 
-    @lastName.setter
-    def lastName(self, value):
-        self._lastName = value
+    def set_lastName(self, value):
+        self.__lastName = value
 
-    @property
-    def email(self):
-        return self._email
+    def get_email(self):
+        return self.__email
 
-    @email.setter
-    def email(self, value):
-        self._email = value
+    def set_email(self, value):
+        self.__email = value
 
-    @property
-    def phoneNumber(self):
-        return self._phoneNumber
+    def get_phoneNumber(self):
+        return self.__phoneNumber
 
-    @phoneNumber.setter
-    def phoneNumber(self, value):
-        self._phoneNumber = value
+    def set_phoneNumber(self, value):
+        self.__phoneNumber = value
 
-    @property
-    def username(self):
-        return self._username
+    def get_username(self):
+        return self.__username
 
-    @username.setter
-    def username(self, value):
-        self._username = value
+    def set_username(self, value):
+        self.__username = value
 
-    @property
-    def password(self):
-        return self._password
+    def get_password(self):
+        return self.__password
 
-    @password.setter
-    def password(self, value):
-        self._password = value
+    def set_password(self, value):
+        self.__password = value
 
-    @property
-    def role(self):
-        return self._role
+    def get_role(self):
+        return self.__role
 
-    @role.setter
-    def role(self, value):
-        self._role = value
+    def set_role(self, value):
+        self.__role = value
 
-    @property
-    def joinDate(self):
-        return self._joinDate
+    def get_joinDate(self):
+        return self.__joinDate
 
-    @joinDate.setter
-    def joinDate(self, value):
-        self._joinDate = value
+    def set_joinDate(self, value):
+        self.__joinDate = value
 
     def authenticate(self, enteredPassword):
-        return self._password == enteredPassword
+        return self.__password == enteredPassword
+
+    def print_info(self):
+        print("Admin ID:", self.__adminID)
+        print("First Name:", self.__firstName)
+        print("Last Name:", self.__lastName)
+        print("Email:", self.__email)
+        print("Phone Number:", self.__phoneNumber)
+        print("Username:", self.__username)
+        # Do not print password for security reasons
+        print("Role:", self.__role)
+        print("Join Date:", self.__joinDate)

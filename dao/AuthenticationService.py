@@ -1,20 +1,21 @@
+from dao.DatabaseContext import DatabaseContext
 from exception.AuthenticationException import AuthenticationException
 
 
-class AuthenticationService:
-    def __init__(self, database_context):
-        self.database_context = database_context
+def get_connection():
+    return DatabaseContext.getConnection(r'D:\Hexaware\CarConnect\util\db.properties')
 
-    def authenticate_user(self, username, password):
+
+class AuthenticationService:
+    def authenticate_customer(self, username, password):
         try:
-            connection = self.database_context.getConnection()
+            connection = get_connection()
             cursor = connection.cursor()
-            cursor.execute("SELECT * FROM Customer WHERE username = ? AND password = ?", (username, password))
+            cursor.execute("SELECT * FROM Customer WHERE username = %s AND password = %s", (username, password))
             customer_data = cursor.fetchone()
 
             if not customer_data:
                 raise AuthenticationException("Incorrect Username or Password...")
-
 
             return True
 
@@ -22,9 +23,9 @@ class AuthenticationService:
             print("Error:", e)
             return False
 
-    def authenticate_customer(self, username, password):
+    def authenticate_admin(self, username, password):
         try:
-            connection = self.database_context.getConnection()
+            connection = get_connection()
             cursor = connection.cursor()
             cursor.execute("SELECT * FROM Admin WHERE username = ? AND password = ?", (username, password))
             admin_data = cursor.fetchone()

@@ -71,3 +71,14 @@ class Customer:
 
     def set_registration_date(self, registration_date):
         self.__registration_date = registration_date
+
+    def print_info(self):
+        print("Customer ID:", self.__customer_id)
+        print("First Name:", self.__first_name)
+        print("Last Name:", self.__last_name)
+        print("Email:", self.__email)
+        print("Phone Number:", self.__phone_number)
+        print("Address:", self.__address)
+        print("Username:", self.__username)
+        # Do not print password for security reasons
+        print("Registration Date:", self.__registration_date)

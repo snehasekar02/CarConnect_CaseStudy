@@ -1,19 +1,24 @@
-import pyodbc
-from util.PropertyUtil import SqlConnection
+import mysql.connector
 
-
+from util import PropertyUtil
 class DatabaseContext:
     @staticmethod
-    def getConnection():
-        connection = None
-        try:
-            dbname = SqlConnection.getDatabaseName('util/db.properties')
-            connection = pyodbc.connect(f'Driver={{SQL Server}};'
-                                        f'Server=SQLEXPRESS;'
-                                        f'Database={dbname};'
-                                        f'Trusted_Connection=yes;')
-        except Exception as e:
-            print("Connection failed:", str(e))
-        return connection
+    def getConnection(property_file):
+        properties = PropertyUtil.SqlConnection.get_property_string(property_file)
+        if properties:
+            try:
+                connection = mysql.connector.connect(
+                    host=properties['hostname'],
+                    database=properties['dbname'],
+                    user=properties['username'],
+                    password=properties['password'],
+                    port=properties['port']
+                )
+                print("Connection established successfully.")
+                return connection
+            except mysql.connector.Error as e:
+                print(f"Error connecting to database: {e}")
+        return None
+
 
 #DESKTOP-QRH50KR\SQLEXPRESS
