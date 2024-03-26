@@ -1,0 +1,49 @@
+create database CarConnect
+use CarConnect;
+
+CREATE TABLE Customer (
+    customer_id INT PRIMARY KEY,
+    first_name NVARCHAR(50),
+    last_name NVARCHAR(50),
+    email NVARCHAR(100),
+    phone_number NVARCHAR(20),
+    address NVARCHAR(255),
+    username NVARCHAR(50) UNIQUE,
+    password NVARCHAR(255),
+    registration_date DATE
+);
+
+CREATE TABLE Vehicle (
+    vehicleID INT PRIMARY KEY,
+    model NVARCHAR(50),
+    make NVARCHAR(50),
+    year INT,
+    color NVARCHAR(50),
+    registrationNumber NVARCHAR(50) UNIQUE,
+    availability BIT,
+    dailyRate DECIMAL(10, 2)
+);
+
+CREATE TABLE Reservation (
+    reservationID INT PRIMARY KEY,
+    customerID INT,
+    vehicleID INT,
+    startDate DATETIME,
+    EndDate DATETIME,
+    TotalCost DECIMAL(10, 2),
+    Status NVARCHAR(50),
+    FOREIGN KEY (customerID) REFERENCES Customer(customer_id),
+    FOREIGN KEY (vehicleID) REFERENCES Vehicle(vehicleID)
+);
+
+CREATE TABLE Admin (
+    admin_id INT PRIMARY KEY,
+    firstName NVARCHAR(50),
+    lastName NVARCHAR(50),
+    email NVARCHAR(100),
+    phoneNumber NVARCHAR(20),
+    username NVARCHAR(50) UNIQUE,
+    password NVARCHAR(255),
+    role NVARCHAR(50),
+    joinDate DATE
+);
