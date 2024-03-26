@@ -1,6 +1,7 @@
 from dao.IReservationService import IReservationService
 from entity.Reservation import  Reservation
 from dao.DatabaseContext import DatabaseContext
+from exception.ReservationException import ReservationException
 
 
 class ReservationService(IReservationService):

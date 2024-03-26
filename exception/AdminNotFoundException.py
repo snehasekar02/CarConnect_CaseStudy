@@ -1,3 +1,4 @@
-class AdminNotFoundException:
+class AdminNotFoundException(Exception):
     def __init__(self,message):
-        return message
+        self.message = message
+        super().__init__(self.message)

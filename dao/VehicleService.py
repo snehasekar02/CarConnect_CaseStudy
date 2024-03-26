@@ -1,7 +1,7 @@
 from dao.IVehicleService import IVehicleService
-from entity.Vehicle import  Vehicle
+from entity.Vehicle import Vehicle
 from dao.DatabaseContext import DatabaseContext
-
+from exception.VehicleNotFoundException import VehicleNotFoundException
 class VehicleService(IVehicleService):
     def __init__(self, database_context):
         self.database_context = DatabaseContext

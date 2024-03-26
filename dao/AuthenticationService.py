@@ -1,4 +1,6 @@
 from exception.AuthenticationException import AuthenticationException
+
+
 class AuthenticationService:
     def __init__(self, database_context):
         self.database_context = database_context
@@ -12,7 +14,7 @@ class AuthenticationService:
 
             if not customer_data:
                 raise AuthenticationException("Incorrect Username or Password...")
-                return False
+
 
             return True
 
@@ -29,7 +31,6 @@ class AuthenticationService:
 
             if not admin_data:
                 raise AuthenticationException("Incorrect Username or Password...")
-                return False
 
             return True
 

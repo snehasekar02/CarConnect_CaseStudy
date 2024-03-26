@@ -1,7 +1,9 @@
 from dao.IAdminService import IAdminService
-from entity.Admin import  Admin
+from entity.Admin import Admin
 from dao.DatabaseContext import DatabaseContext
-from exception import AdminNotFoundException
+from exception.AdminNotFoundException import AdminNotFoundException
+from exception.InvalidInputException import InvalidInputException
+
 class AdminService(IAdminService):
     def __init__(self):
         self.database_context = DatabaseContext
@@ -19,11 +21,12 @@ class AdminService(IAdminService):
             admin = Admin(*admin_data)
             return admin
 
+        except InvalidInputException:
+            print("Required field is missing or has an incorrect format")
+
         except Exception as e:
             print("Error:", e)
             return None
-
-
 
     def get_admin_by_username(self, username):
         try:
@@ -38,6 +41,9 @@ class AdminService(IAdminService):
             admin = Admin(*admin_data)
             return admin
 
+        except InvalidInputException:
+            print("Required field is missing or has an incorrect format")
+
         except Exception as e:
             print("Error:", e)
             return None
@@ -49,11 +55,15 @@ class AdminService(IAdminService):
 
             cursor.execute(
                 "INSERT INTO Admin (admin_id, firstName, lastName, email, phoneNumber,username,password,role,joinDate) VALUES (?, ?, ?, ?, ?,?,?,?,?)",
-                (Admin.admin_id, Admin.firstName, Admin.lastName,Admin.email,Admin.phoneNumber,Admin.username,Admin.password,Admin.role,Admin.joinDate))
+                (Admin.adminID, Admin.firstName, Admin.lastName, Admin.email, Admin.phoneNumber, Admin.username,
+                 Admin.password, Admin.role, Admin.joinDate))
 
             connection.commit()
 
             return True
+
+        except InvalidInputException:
+            print("Required field is missing or has an incorrect format")
 
         except Exception as e:
             print("Error:", e)
@@ -66,10 +76,14 @@ class AdminService(IAdminService):
 
             cursor.execute(
                 "UPDATE  Admin SET firstName=?, lastName=?, email=?, phoneNumber=?,username=?,password=?,role=?,joinDate=? WHERE admin_id,=?",
-                ( Admin.firstName, Admin.lastName,Admin.email,Admin.phoneNumber,Admin.username,Admin.password,Admin.role,Admin.joinDate,Admin.admin_id,))
+                (Admin.firstName, Admin.lastName, Admin.email, Admin.phoneNumber, Admin.username, Admin.password,
+                 Admin.role, Admin.joinDate, Admin.adminID,))
             connection.commit()
 
             return True
+
+        except InvalidInputException:
+            print("Required field is missing or has an incorrect format")
 
         except Exception as e:
             print("Error:", e)
@@ -83,7 +97,10 @@ class AdminService(IAdminService):
             cursor.execute("DELETE FROM Admin WHERE admin_id=?", (admin_id,))
             connection.commit()
             return True
+
+        except InvalidInputException:
+            print("Required field is missing or has an incorrect format")
+
         except Exception as e:
             print("Error:", e)
             return False
-
