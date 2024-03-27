@@ -36,6 +36,7 @@ def handle_customer_actions():
             status = input("Enter status: ")
             reservation = Reservation(reservationID, customerID, vehicleID, startDate, endDate, totalCost, status)
             reservationService.create_reservation(reservation)
+            print("Reservation created successfully!!")
 
 
         elif choice == '2':
@@ -49,10 +50,12 @@ def handle_customer_actions():
             reservation = Reservation(reservationID, customerID, vehicleID, startDate, endDate, totalCost, status)
             reservation.print_info()
             reservationService.update_reservation(reservation)
+            print("Reservation updated successfully!!")
 
         elif choice == '3':
             Rid = int(input("Enter ReservationID to be cancelled: "))
             reservationService.cancel_reservation(Rid)
+            print("Reservation cancelled successfully!!")
 
         elif choice == '4':
             print("Updating customer information")
@@ -68,6 +71,7 @@ def handle_customer_actions():
             updated_customer = Customer(customer_id, first_name, last_name, email, phone_number, address,
                                         username, password, registration_date)
             customerService.update_customer(updated_customer)
+            print("Customer Details updated successfully!!")
 
         elif choice == '5':
             print("Available Vehicles: ")
@@ -150,9 +154,11 @@ def handle_admin_actions():
 
             admin = Admin(adminID, firstName, lastName, email, phoneNumber, username, password, role, joinDate)
             adminService.update_admin(admin)
+            print("Admin updated successfully!!")
         elif choice == '3':
             admin_id = input("Enter admin ID: ")
             adminService.delete_admin(admin_id)
+            print("Admin deleted successfully!!")
         elif choice == '4':
             vehicleID = input("Enter Vehicle ID: ")
             model = input("Enter Model: ")
@@ -160,10 +166,11 @@ def handle_admin_actions():
             year = input("Enter Year: ")
             color = input("Enter Color: ")
             registrationNumber = input("Enter Registration Number: ")
-            availability =int( input("Enter Availability (True=1/False=0): "))
+            availability =int(input("Enter Availability (True=1/False=0): "))
             dailyRate = float(input("Enter Daily Rate: "))
             vehicle = Vehicle(vehicleID, model, make, year, color, registrationNumber, availability, dailyRate)
             vehicleService.add_vehicle(vehicle)
+            print("Vehicle Added sucessfully!!")
         elif choice == '5':
             vehicle_id = input("Enter vehicle ID to be updated: ")
             model = input("Enter Model: ")
@@ -175,9 +182,11 @@ def handle_admin_actions():
             dailyRate = 1
             vehicle = Vehicle(vehicle_id, model, make, year, color, registrationNumber, availability, dailyRate)
             vehicleService.update_vehicle(vehicle)
+            print("Vehicle updated successfully!!")
         elif choice == '6':
             vehicle_id = input("Enter vehicle ID: ")
             vehicleService.remove_vehicle(vehicle_id)
+            print("Vehicle deleted successfully!!")
         elif choice == '7':
             print("Exiting Admin Actions...")
             break
