@@ -1,18 +1,19 @@
 from dao.IReservationService import IReservationService
-from entity.Reservation import  Reservation
+from entity.Reservation import Reservation
 from dao.DatabaseContext import DatabaseContext
 from exception.ReservationException import ReservationException
 
 
-class ReservationService(IReservationService):
-    def __init__(self, database_context):
-        self.database_context = DatabaseContext
+def get_connection():
+    return DatabaseContext.getConnection(r'D:\Hexaware\CarConnect\util\db.properties')
 
+
+class ReservationService(IReservationService):
     def get_reservation_by_id(self, reservationID):
         try:
-            connection = self.database_context.getConnection()
+            connection = get_connection()
             cursor = connection.cursor()
-            cursor.execute("SELECT * FROM Reservation WHERE reservationID = ?", (reservationID,))
+            cursor.execute("SELECT * FROM Reservation WHERE reservationID = %s", (reservationID,))
             reservation_data = cursor.fetchone()
 
             if not reservation_data:
@@ -27,9 +28,9 @@ class ReservationService(IReservationService):
 
     def get_reservations_by_customer_id(self, customer_id):
         try:
-            connection = self.database_context.getConnection()
+            connection = get_connection()
             cursor = connection.cursor()
-            cursor.execute("SELECT * FROM Reservation WHERE customerID = ?", (customer_id,))
+            cursor.execute("SELECT * FROM Reservation WHERE customerID = %s", (customer_id,))
             reservation_data = cursor.fetchall()
 
             if not reservation_data:
@@ -44,12 +45,14 @@ class ReservationService(IReservationService):
 
     def create_reservation(self, reservation):
         try:
-            connection = self.database_context.getConnection()
+            connection = get_connection()
             cursor = connection.cursor()
 
             cursor.execute(
-                "INSERT INTO Reservation (reservationID, customerID, vehicleID, startDate, EndDate,TotalCost,Status) VALUES (?, ?, ?, ?, ?,?,?)",
-                (Reservation.reservationID, Reservation.customerID,Reservation.vehicleID,Reservation.startDate,Reservation.endDate,Reservation.totalCost,Reservation.status))
+                "INSERT INTO Reservation (reservationID, customerID, vehicleID, startDate, EndDate,TotalCost,Status) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+                (reservation.get_reservationID(), reservation.get_customerID(), reservation.get_vehicleID(),
+                 reservation.get_startDate(), reservation.get_endDate(), reservation.get_totalCost(),
+                 reservation.get_status()))
 
             connection.commit()
 
@@ -61,13 +64,16 @@ class ReservationService(IReservationService):
 
     def update_reservation(self, reservation):
         try:
-            connection = self.database_context.getConnection()
+            connection = get_connection()
             cursor = connection.cursor()
 
             cursor.execute(
-                "UPDATE  Reservation SET customerID=?, vehicleID=?, startDate=?, endDate=?,totalCost=?,status=? WHERE reservationID,=?",
-                (Reservation.customerID,Reservation.vehicleID,Reservation.startDate,Reservation.endDate,Reservation.totalCost,Reservation.status, Reservation.reservationID,))
+                "UPDATE  Reservation SET customerID=%s, vehicleID=%s, startDate=%s, endDate=%s,totalCost=%s,status=%s WHERE reservationID=%s",
+                (reservation.get_customerID(), reservation.get_vehicleID(), reservation.get_startDate(),
+                 reservation.get_endDate(), reservation.get_totalCost(), reservation.get_status(),
+                 reservation.get_reservationID()))
             connection.commit()
+            print("Reservation Updated!!")
 
             return True
 
@@ -77,14 +83,12 @@ class ReservationService(IReservationService):
 
     def cancel_reservation(self, reservation_id):
         try:
-            connection = self.database_context.getConnection()
+            connection = get_connection()
             cursor = connection.cursor()
 
-            cursor.execute("DELETE FROM Reservation WHERE reservationID=?", (reservation_id,))
+            cursor.execute("DELETE FROM Reservation WHERE reservationID=%s", (reservation_id,))
             connection.commit()
             return True
         except Exception as e:
             print("Error:", e)
             return False
-
-

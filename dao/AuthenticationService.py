@@ -27,7 +27,7 @@ class AuthenticationService:
         try:
             connection = get_connection()
             cursor = connection.cursor()
-            cursor.execute("SELECT * FROM Admin WHERE username = ? AND password = ?", (username, password))
+            cursor.execute("SELECT * FROM Admin WHERE username = %s AND password = %s", (username, password))
             admin_data = cursor.fetchone()
 
             if not admin_data:

@@ -24,7 +24,7 @@ class CustomerService(ICustomerService):
         try:
             connection = get_connection()
             cursor = connection.cursor()
-            cursor.execute("SELECT * FROM Customer WHERE customer_id = ?", (customer_id,))
+            cursor.execute("SELECT * FROM Customer WHERE customer_id = %s", (customer_id,))
             customer_data = cursor.fetchone()
 
             if not customer_data:
@@ -41,7 +41,7 @@ class CustomerService(ICustomerService):
         try:
             connection = get_connection()
             cursor = connection.cursor()
-            cursor.execute("SELECT * FROM Customer WHERE Username= ?", (username,))
+            cursor.execute("SELECT * FROM Customer WHERE username= ?", (username,))
             customer_data = cursor.fetchone()
 
             if not customer_data:
@@ -80,10 +80,11 @@ class CustomerService(ICustomerService):
             cursor = connection.cursor()
 
             cursor.execute(
-                "UPDATE  Customer SET firstName=?, lastName=?, email=?, phoneNumber=?,username=?,password=?,role=?,joinDate=? WHERE customer_id,=?",
-                (customer.firstName, customer.lastName, customer.email, customer.phoneNumber, customer.username,
-                 customer.password,
-                 customer.role, customer.joinDate, customer.customer_id,))
+                "UPDATE  Customer SET first_name=%s, last_name=%s, email=%s, phone_number=%s, address= %s, "
+                "username=%s,password=%s,registration_date=%s WHERE customer_id=%s",
+                (customer.get_first_name(), customer.get_last_name(), customer.get_email(), customer.get_phone_number(),
+                 customer.get_address(), customer.get_username(), customer.get_password(),
+                 customer.get_registration_date(), customer.get_customer_id()))
             connection.commit()
 
             return True
@@ -97,7 +98,7 @@ class CustomerService(ICustomerService):
             connection = get_connection()
             cursor = connection.cursor()
 
-            cursor.execute("DELETE FROM Customer WHERE customer_id=?", (customer_id,))
+            cursor.execute("DELETE FROM Customer WHERE customer_id=%s", (customer_id,))
             connection.commit()
             return True
         except Exception as e:

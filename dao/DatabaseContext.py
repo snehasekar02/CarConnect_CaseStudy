@@ -14,7 +14,7 @@ class DatabaseContext:
                     password=properties['password'],
                     port=properties['port']
                 )
-                print("Connection established successfully.")
+                #print("Connection established successfully.")
                 return connection
             except mysql.connector.Error as e:
                 print(f"Error connecting to database: {e}")

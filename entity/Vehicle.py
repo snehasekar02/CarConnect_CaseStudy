@@ -1,74 +1,73 @@
 class Vehicle:
     def __init__(self, vehicleID, model, make, year, color, registrationNumber, availability, dailyRate):
-        self._vehicleID = vehicleID
-        self._model = model
-        self._make = make
-        self._year = year
-        self._color = color
-        self._registrationNumber = registrationNumber
-        self._availability = availability
-        self._dailyRate = dailyRate
+        self.__vehicleID = vehicleID
+        self.__model = model
+        self.__make = make
+        self.__year = year
+        self.__color = color
+        self.__registrationNumber = registrationNumber
+        self.__availability = availability
+        self.__dailyRate = dailyRate
 
-    @property
-    def vehicleID(self):
-        return self._vehicleID
+    def get_vehicleID(self):
+        return self.__vehicleID
 
-    @vehicleID.setter
-    def vehicleID(self, value):
-        self._vehicleID = value
+    def set_vehicleID(self, value):
+        self.__vehicleID = value
 
-    @property
-    def model(self):
-        return self._model
+    def get_model(self):
+        return self.__model
 
-    @model.setter
-    def model(self, value):
-        self._model = value
+    def set_model(self, value):
+        self.__model = value
 
-    @property
-    def make(self):
-        return self._make
+    def get_make(self):
+        return self.__make
 
-    @make.setter
-    def make(self, value):
-        self._make = value
+    def set_make(self, value):
+        self.__make = value
 
-    @property
-    def year(self):
-        return self._year
+    def get_year(self):
+        return self.__year
 
-    @year.setter
-    def year(self, value):
-        self._year = value
+    def set_year(self, value):
+        self.__year = value
 
-    @property
-    def color(self):
-        return self._color
+    def get_color(self):
+        return self.__color
 
-    @color.setter
-    def color(self, value):
-        self._color = value
+    def set_color(self, value):
+        self.__color = value
 
-    @property
-    def registrationNumber(self):
-        return self._registrationNumber
+    def get_registrationNumber(self):
+        return self.__registrationNumber
 
-    @registrationNumber.setter
-    def registrationNumber(self, value):
-        self._registrationNumber = value
+    def set_registrationNumber(self, value):
+        self.__registrationNumber = value
 
-    @property
-    def availability(self):
-        return self._availability
+    def get_availability(self):
+        return self.__availability
 
-    @availability.setter
-    def availability(self, value):
-        self._availability = value
+    def set_availability(self, value):
+        self.__availability = value
 
-    @property
-    def dailyRate(self):
-        return self._dailyRate
+    def get_dailyRate(self):
+        return self.__dailyRate
 
-    @dailyRate.setter
-    def dailyRate(self, value):
-        self._dailyRate = value
+    def set_dailyRate(self, value):
+        self.__dailyRate = value
+
+    def print_info(self):
+        print("Vehicle ID:", self.__vehicleID)
+        print("Model:", self.__model)
+        print("Make:", self.__make)
+        print("Year:", self.__year)
+        print("Color:", self.__color)
+        print("Registration Number:", self.__registrationNumber)
+        print("Availability:", self.__availability)
+        print("Daily Rate:", self.__dailyRate)
+
+    def __str__(self):
+        return (f"Vehicle ID: {self.__vehicleID}, Model: {self.__model}, Make: {self.__make}, "
+                f"Year: {self.__year}, Color: {self.__color}, Registration Number: {self.__registrationNumber}, "
+                f"Availability: {self.__availability}, Daily Rate: {self.__dailyRate}")

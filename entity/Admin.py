@@ -77,3 +77,8 @@ class Admin:
         # Do not print password for security reasons
         print("Role:", self.__role)
         print("Join Date:", self.__joinDate)
+
+    def __str__(self):
+        return (f"Admin ID: {self.__adminID}, First Name: {self.__firstName}, Last Name: {self.__lastName},"
+                f" Email: {self.__email}, Phone Number: {self.__phoneNumber}, Username: {self.__username}, "
+                f"Role: {self.__role}, Join Date: {self.__joinDate}")

@@ -1,4 +1,6 @@
 from entity.Vehicle import Vehicle
+
+
 class Reservation:
     def __init__(self, reservationID, customerID, vehicleID, startDate, endDate, totalCost, status):
         self.__reservationID = reservationID
@@ -9,67 +11,62 @@ class Reservation:
         self.__totalCost = totalCost
         self.__status = status
 
-    @property
-    def reservationID(self):
+    def get_reservationID(self):
         return self.__reservationID
 
-    @reservationID.setter
-    def reservationID(self, value):
+    def set_reservationID(self, value):
         self.__reservationID = value
 
-    @property
-    def customerID(self):
+    def get_customerID(self):
         return self.__customerID
 
-    @customerID.setter
-    def customerID(self, value):
+    def set_customerID(self, value):
         self.__customerID = value
 
-    @property
-    def vehicleID(self):
-        return self.__customerID
+    def get_vehicleID(self):
+        return self.__vehicleID
 
-    @vehicleID.setter
-    def vehicleID(self, value):
+    def set_vehicleID(self, value):
         self.__vehicleID = value
 
-    @property
-    def startDate(self):
+    def get_startDate(self):
         return self.__startDate
 
-    @startDate.setter
-    def startDate(self, value):
+    def set_startDate(self, value):
         self.__startDate = value
 
-    @property
-    def endDate(self):
+    def get_endDate(self):
         return self.__endDate
 
-    @endDate.setter
-    def endDate(self, value):
+    def set_endDate(self, value):
         self.__endDate = value
 
-    @property
-    def totalCost(self):
+    def get_totalCost(self):
         return self.__totalCost
 
-    @totalCost.setter
-    def totalCost(self, value):
+    def set_totalCost(self, value):
         self.__totalCost = value
 
-    @property
-    def status(self):
+    def get_status(self):
         return self.__status
 
-    @status.setter
-    def status(self, value):
+    def set_status(self, value):
         self.__status = value
 
     def calculateTotalCost(self):
         """This method is called when the customer needs an insurance policy"""
-        duration_in_days = (self.endDate - self.startDate).days
+        duration_in_days = (self.__endDate - self.__startDate).days
         rate_per_day = Vehicle.dailyRate
         insurance_per_day = 20
         insurance = insurance_per_day * duration_in_days
         total_cost = (duration_in_days * rate_per_day) + insurance
-        self.totalCost = total_cost
+        self.__totalCost = total_cost
+
+    def print_info(self):
+        print("Reservation ID:", self.__reservationID)
+        print("Customer ID:", self.__customerID)
+        print("Vehicle ID:", self.__vehicleID)
+        print("Start Date:", self.__startDate)
+        print("End Date:", self.__endDate)
+        print("Total Cost:", self.__totalCost)
+        print("Status:", self.__status)
