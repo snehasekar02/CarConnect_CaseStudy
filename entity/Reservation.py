@@ -1,4 +1,5 @@
 from entity.Vehicle import Vehicle
+from datetime import datetime
 
 
 class Reservation:
@@ -53,13 +54,18 @@ class Reservation:
     def set_status(self, value):
         self.__status = value
 
-    def calculateTotalCost(self):
+    def calculateTotalCost(self, dailyRate):
         """This method is called when the customer needs an insurance policy"""
-        duration_in_days = (self.__endDate - self.__startDate).days
-        rate_per_day = Vehicle.dailyRate
+        end = self.get_endDate()
+        start = self.get_startDate()
+        date_obj1 = datetime.strptime(start, "%Y-%m-%d")
+        date_obj2 = datetime.strptime(end, "%Y-%m-%d")
+        date_difference = date_obj2 - date_obj1
+        difference_in_days = abs(date_difference.days)
+        print(difference_in_days)
         insurance_per_day = 20
-        insurance = insurance_per_day * duration_in_days
-        total_cost = (duration_in_days * rate_per_day) + insurance
+        insurance = insurance_per_day * difference_in_days
+        total_cost = (difference_in_days * dailyRate) + insurance
         self.__totalCost = total_cost
 
     def print_info(self):

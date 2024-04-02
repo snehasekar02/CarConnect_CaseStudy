@@ -15,7 +15,7 @@ class AuthenticationService:
             customer_data = cursor.fetchone()
 
             if not customer_data:
-                raise AuthenticationException("Incorrect Username or Password...")
+                raise AuthenticationException()
 
             return True
 
@@ -31,7 +31,7 @@ class AuthenticationService:
             admin_data = cursor.fetchone()
 
             if not admin_data:
-                raise AuthenticationException("Incorrect Username or Password...")
+                raise AuthenticationException()
 
             return True
 

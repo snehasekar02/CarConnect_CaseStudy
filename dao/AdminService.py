@@ -20,7 +20,7 @@ class AdminService(IAdminService):
                 raise AdminNotFoundException("Admin with ID {} not found".format(admin_id))
 
             admin = Admin(*admin_data)
-            return str(admin)
+            return admin
 
         except InvalidInputException:
             print("Required field is missing or has an incorrect format")

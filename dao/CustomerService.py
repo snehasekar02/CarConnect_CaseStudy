@@ -1,7 +1,7 @@
 from dao.ICustomerService import ICustomerService
 from entity.Customer import Customer
 from dao.DatabaseContext import DatabaseContext
-from exception.CustomerNotFoundException import CustomerNotFoundException
+from exception.InvalidInputException import InvalidInputException
 
 
 def get_connection():
@@ -28,7 +28,7 @@ class CustomerService(ICustomerService):
             customer_data = cursor.fetchone()
 
             if not customer_data:
-                raise CustomerNotFoundException("Admin with ID {} not found".format(customer_id))
+                raise InvalidInputException("Customer with ID {} not found".format(customer_id))
 
             customer = Customer(*customer_data)
             return customer
@@ -41,11 +41,11 @@ class CustomerService(ICustomerService):
         try:
             connection = get_connection()
             cursor = connection.cursor()
-            cursor.execute("SELECT * FROM Customer WHERE username= ?", (username,))
+            cursor.execute("SELECT * FROM Customer WHERE username= %s", (username,))
             customer_data = cursor.fetchone()
 
             if not customer_data:
-                raise CustomerNotFoundException("Admin with username {} not found".format(username))
+                raise InvalidInputException("Customer with username {} not found".format(username))
 
             customer = Customer(*customer_data)
             return customer
@@ -78,7 +78,8 @@ class CustomerService(ICustomerService):
         try:
             connection = get_connection()
             cursor = connection.cursor()
-
+            if not customer:
+                raise InvalidInputException("Customer id cannot be none")
             cursor.execute(
                 "UPDATE  Customer SET first_name=%s, last_name=%s, email=%s, phone_number=%s, address= %s, "
                 "username=%s,password=%s,registration_date=%s WHERE customer_id=%s",
@@ -88,7 +89,6 @@ class CustomerService(ICustomerService):
             connection.commit()
 
             return True
-
         except Exception as e:
             print("Error:", e)
             return False
@@ -97,10 +97,12 @@ class CustomerService(ICustomerService):
         try:
             connection = get_connection()
             cursor = connection.cursor()
-
+            if not customer_id:
+                raise InvalidInputException("Customer id cannot be none")
             cursor.execute("DELETE FROM Customer WHERE customer_id=%s", (customer_id,))
             connection.commit()
             return True
+
         except Exception as e:
             print("Error:", e)
             return False

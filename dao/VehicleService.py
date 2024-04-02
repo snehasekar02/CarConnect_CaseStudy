@@ -10,7 +10,7 @@ class VehicleService(IVehicleService):
         try:
             connection = get_connection()
             cursor = connection.cursor()
-            cursor.execute("SELECT * FROM Vehicle WHERE vehicleID = ?", (vehicle_id,))
+            cursor.execute("SELECT * FROM Vehicle WHERE vehicleID = %s", (vehicle_id,))
             vehicle_data = cursor.fetchone()
 
             if not vehicle_data:
@@ -31,7 +31,8 @@ class VehicleService(IVehicleService):
             vehicles_data = cursor.fetchall()
 
             if not vehicles_data:
-                return "No Vehicles available!!"
+                print("No Vehicles available!!")
+                return None
 
             vehicles = []
             for vehicle_data in vehicles_data:
